@@ -7,6 +7,7 @@
 //
 
 #import "FFOptionViewController.h"
+#import "FFTResultListController.h"
 
 #define kSCREEN_WIDTH   ([UIScreen mainScreen].bounds.size.width)
 #define kSCREEN_HEIGHT  ([UIScreen mainScreen].bounds.size.height)
@@ -27,6 +28,8 @@
 
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *calculateSet;
 @property (nonatomic, strong) NSMutableSet<NSNumber *> *resultSet;
+
+@property (nonatomic, strong) FFTResultListController *resultController;
 
 
 
@@ -52,135 +55,52 @@
 - (void)respondsToCalculate {
     self.resultSet = nil;
     self.calculateSet = [NSMutableSet setWithArray:self.selectArray];
-//    self.resultSet = [self calculateCombinationWithSet:self.calculateSet Number:_zuhe ResultSet:self.resultSet];
-    
-    NSMutableArray *array = [self calculateSetWithSet:self.calculateSet number:_zuhe resultArray:[NSMutableArray array] lastNumber:nil];
-    
-    NSLog(@"result array = %@",array);
+
+    NSMutableArray *resultArray = [NSMutableArray array];
+    [self calculateCombinationWithSet:self.calculateSet needNumber:_zuhe frontArray:[NSMutableArray array] resultArray:resultArray];
+    self.resultController.resultList = resultArray;
+
+    [self.navigationController pushViewController:self.resultController animated:YES];
 }
 
-- (NSMutableSet *)calculateCombinationWithSet:(NSMutableSet<NSNumber *> *)calculateSet Number:(NSInteger)number ResultSet:(NSMutableSet *)resultSet {
-    
-    if (calculateSet.count == number) {
-        return calculateSet;
-    }
-    
-    NSArray *array = [calculateSet allObjects];
-    
-    number--;
-    for (NSNumber *calculateNumber in array) {
-        NSMutableArray *reslutArray = [NSMutableArray arrayWithCapacity:number];
-        [reslutArray addObject:calculateNumber];
-    
-        [calculateSet removeObject:calculateNumber];
-//        [self calculateSetWithSet:calculateSet number:number resultArray:reslutArray];
-        [resultSet addObject:reslutArray];
-        if (calculateSet.count == number) {
-            break;
-        }
-    }
-    
-    NSLog(@"relust === %@",resultSet);
+- (void)calculateCombinationWithSet:(NSMutableSet *)set needNumber:(NSInteger)needNumber frontArray:(NSMutableArray *)frontArray resultArray:(NSMutableArray *)resultArray {
 
-    
-    return nil;
-}
-
-- (NSMutableArray *)calculateSetWithSet:(NSMutableSet *)set number:(NSInteger)number resultArray:(NSMutableArray *)resultArray lastNumber:(NSNumber *)lastNumber {
-    
-    if (number == set.count) {
-        NSMutableArray *array = [[set allObjects] mutableCopy];
-        if (lastNumber) {
-            [array addObject:lastNumber];
-        }
-        
-        return array;
+    if (needNumber == set.count) {
+        [self addResultNumber:set WithFrontNumber:frontArray withResultArray:resultArray];
+        return;
     }
-    
-    number--;
-    if (number == 0) {
-        
-//        NSLog(@"========================================");
-//        NSLog(@"calculate set == %ld",set.count);
-//        NSLog(@"calculate number == %ld",number);
-//        NSLog(@"calculate last number == %@",lastNumber);
-//        NSLog(@"========================================");
-        
-//        NSMutableArray *array = [NSMutableArray array];
-        
-        [resultArray addObjectsFromArray:[self addArray:[[set allObjects] mutableCopy] Number:lastNumber]];
-        return resultArray;
-        
-        
+
+    needNumber--;
+    if (needNumber == 0) {
+        [self addresultNumberWithSet:set toResultArray:resultArray withFrontNumber:frontArray];
     } else {
         NSArray *array = [[set allObjects] sortedArrayUsingSelector:@selector(compare:)];
         for (NSNumber *resultNumber in array) {
             [set removeObject:resultNumber];
-            NSMutableSet *set1 = [set mutableCopy];
-            
-            if (set1.count == number) {
-                [resultArray addObject:[self calculateSetWithSet:set1 number:number resultArray:nil lastNumber:resultNumber]];
-                break;
-            }
-//
-//            NSLog(@"==============================");
-//            NSLog(@"result number == %@",resultNumber);
-////            NSLog(@"set1 = %@",set1);
-//            NSLog(@"number = %ld",number);
-//            NSLog(@"last number == %@",lastNumber);
-//            NSLog(@"==============================");
-            
-            NSMutableArray *arr = [self calculateSetWithSet:set1 number:number resultArray:[NSMutableArray array] lastNumber:resultNumber];
-            
-            if (lastNumber) {
-//                [resultArray addObject:[self addArray:arr Number:lastNumber]];
-                NSLog(@"add array = %@",[self addArray:arr Number:lastNumber]);
-                [resultArray addObjectsFromArray:array];
-            }
-            
-            
-            if (set.count == number) {
+            NSMutableArray *frnotArr = [frontArray mutableCopy];
+            [frnotArr addObject:resultNumber];
+                [self calculateCombinationWithSet:[set mutableCopy] needNumber:needNumber frontArray:frnotArr resultArray:resultArray];
+            if (set.count == needNumber) {
                 break;
             }
         }
-        NSLog(@"================ %@",resultArray);
-//        return resultArray;
     }
-    
-    
-//    NSLog(@"result array == %@",resultArray);
-    return resultArray;
-    
 }
 
-- (NSMutableArray *)addArray:(NSMutableArray *)array Number:(NSNumber *)number {
-    [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSMutableArray *arr = nil;
-        if ([obj isKindOfClass:[NSNumber class]]) {
-            arr = [NSMutableArray arrayWithObject:obj];
-        } else if ([obj isKindOfClass:[NSArray class]]) {
-            arr = [obj mutableCopy];
-        }
-        
-        if (number) {
-            [arr addObject:number];
-        }
-        [array replaceObjectAtIndex:idx withObject:arr];
-    }];
-    return [array mutableCopy];
+
+- (void)addResultNumber:(NSMutableSet *)set WithFrontNumber:(NSMutableArray *)frontArray withResultArray:(NSMutableArray *)resultArray {
+    [frontArray addObjectsFromArray:[set allObjects]];
+    [resultArray addObject:[frontArray sortedArrayUsingSelector:@selector(compare:)]];
 }
 
-//- (NSArray *)selectNumberInSet:(NSMutableSet *)set {
-//    if (set.count > 0) {
-//        NSMutableArray *array = [NSMutableArray arrayWithCapacity:set.count];
-//        for (NSNumber *number in set) {
-//            [array addObject:@[number]];
-//        }
-//        return array;
-//    } else {
-//        return nil;
-//    }
-//}
+- (void)addresultNumberWithSet:(NSMutableSet *)set toResultArray:(NSMutableArray *)resultArray withFrontNumber:(NSMutableArray *)frontArray {
+    for (NSNumber *number in set) {
+        NSMutableArray *addArray = [frontArray mutableCopy];
+        [addArray addObject:number];
+        [resultArray addObject:[addArray sortedArrayUsingSelector:@selector(compare:)]];
+    }
+}
+
 
 #pragma mark - data source
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -214,8 +134,7 @@
 #pragma mark - setter
 - (void)setSelectArray:(NSArray *)selectArray {
     _selectArray = [selectArray sortedArrayUsingSelector:@selector(compare:)];
-    
-    NSLog(@"selectarray === %@",_selectArray);
+    self.resultController.resultList = nil;
     _zuhe = 1;
     self.resultSet = nil;
     self.calculateSet = nil;
@@ -266,6 +185,13 @@
         _resultSet = [NSMutableSet set];
     }
     return _resultSet;
+}
+
+- (FFTResultListController *)resultController {
+    if (!_resultController) {
+        _resultController = [FFTResultListController new];
+    }
+    return _resultController;
 }
 
 

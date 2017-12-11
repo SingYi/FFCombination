@@ -14,6 +14,7 @@
 		5EF810D81FDC09760088DF94 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF810D71FDC09760088DF94 /* main.m */; };
 		5EF810E01FDC10E30088DF94 /* FFCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF810DF1FDC10E30088DF94 /* FFCollectionViewCell.m */; };
 		5EF810E31FDC1B260088DF94 /* FFOptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF810E21FDC1B260088DF94 /* FFOptionViewController.m */; };
+		B56564061FDE90E600E3CC44 /* FFTResultListController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56564051FDE90E600E3CC44 /* FFTResultListController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,8 @@
 		5EF810DF1FDC10E30088DF94 /* FFCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFCollectionViewCell.m; sourceTree = "<group>"; };
 		5EF810E11FDC1B260088DF94 /* FFOptionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOptionViewController.h; sourceTree = "<group>"; };
 		5EF810E21FDC1B260088DF94 /* FFOptionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOptionViewController.m; sourceTree = "<group>"; };
+		B56564041FDE90E600E3CC44 /* FFTResultListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFTResultListController.h; sourceTree = "<group>"; };
+		B56564051FDE90E600E3CC44 /* FFTResultListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFTResultListController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,8 @@
 				5EF810CC1FDC09760088DF94 /* ViewController.m */,
 				5EF810E11FDC1B260088DF94 /* FFOptionViewController.h */,
 				5EF810E21FDC1B260088DF94 /* FFOptionViewController.m */,
+				B56564041FDE90E600E3CC44 /* FFTResultListController.h */,
+				B56564051FDE90E600E3CC44 /* FFTResultListController.m */,
 				5EF810DE1FDC10E30088DF94 /* FFCollectionViewCell.h */,
 				5EF810DF1FDC10E30088DF94 /* FFCollectionViewCell.m */,
 				5EF810D11FDC09760088DF94 /* Assets.xcassets */,
@@ -151,6 +156,7 @@
 				5EF810E31FDC1B260088DF94 /* FFOptionViewController.m in Sources */,
 				5EF810E01FDC10E30088DF94 /* FFCollectionViewCell.m in Sources */,
 				5EF810CD1FDC09760088DF94 /* ViewController.m in Sources */,
+				B56564061FDE90E600E3CC44 /* FFTResultListController.m in Sources */,
 				5EF810D81FDC09760088DF94 /* main.m in Sources */,
 				5EF810CA1FDC09760088DF94 /* AppDelegate.m in Sources */,
 			);
