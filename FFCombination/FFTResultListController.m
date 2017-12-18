@@ -44,7 +44,7 @@
     NSArray *resultArray = [self.resultList[indexPath.row] sortedArrayUsingSelector:@selector(compare:)];
     NSString *resultString = [resultArray componentsJoinedByString:@"-"];
 
-    cell.textLabel.text = [NSString stringWithFormat:@"%3.00ld>>> %@",indexPath.row + 1,resultString];
+    cell.textLabel.text = [NSString stringWithFormat:@"%3.00ld >>>   %@",indexPath.row + 1,resultString];
 
     
     return cell;

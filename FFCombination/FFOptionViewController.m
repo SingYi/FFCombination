@@ -49,6 +49,7 @@
     [self.view addSubview:self.contentTitle];
     [self.view addSubview:self.pickerView];
     self.navigationItem.rightBarButtonItem = self.rightButton;
+    _zuhe = 1;
 }
 
 #pragma mark - responds
@@ -135,7 +136,7 @@
 - (void)setSelectArray:(NSArray *)selectArray {
     _selectArray = [selectArray sortedArrayUsingSelector:@selector(compare:)];
     self.resultController.resultList = nil;
-    _zuhe = 1;
+//    _zuhe = 1;
     self.resultSet = nil;
     self.calculateSet = nil;
     NSString *contentTitle = [_selectArray componentsJoinedByString:@" - "];
